@@ -4,6 +4,8 @@ Given an array  of  integers and a number, , perform  left rotations on the arra
 
 'use strict';
 
+'use strict';
+
 const fs = require('fs');
 
 process.stdin.resume();
@@ -37,7 +39,14 @@ function readLine() {
 
 function rotLeft(a, d) {
     // Write your code here
-
+    var n = 1;
+    while (n <= d) {
+        let elem = a[0];
+        a.shift();
+        a.push(elem)
+        n++
+    }
+    return a
 }
 
 function main() {
