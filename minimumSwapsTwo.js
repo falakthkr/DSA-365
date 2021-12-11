@@ -1,6 +1,5 @@
 `You are given an unordered array consisting of consecutive integers = [1, 2, 3, ..., n] without any duplicates. You are allowed to swap any two elements. Find the minimum number of swaps required to sort the array in ascending order.`
 
-
 'use strict';
 
 const fs = require('fs');
@@ -29,17 +28,17 @@ function readLine() {
 
 // Complete the minimumSwaps function below.
 function minimumSwaps(arr) {
-    let count = 0;
-    arr.forEach((item, i) => {
-        const position = i + 1;
-        if (item !== position) {
-            const swapItem = arr.indexOf(position);
-            arr[swapItem] = item;
-            arr[i] = position;
-            count = count + 1;
+    const indexes = arr.reduce((c, v, i) => (c[v] = i, c), []);
+    const len = arr.length - 1;
+    let swapCount = 0;
+    for (let i = 0; i < len; i++) {
+        if (arr[i] !== i + 1) {
+            arr[indexes[i + 1]] = arr[i];
+            indexes[arr[i]] = indexes[i + 1];
+            swapCount++;
         }
-    });
-    return count;
+    }
+    return swapCount;
 }
 
 function main() {
