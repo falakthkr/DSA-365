@@ -35,17 +35,25 @@ function readLine() {
 
 function arrayManipulation(n, queries) {
     // Write your code here
-    var arr = []
-    for (let i = 0; i < n; i++) {
-        arr.push(0)
-    }
-    for (let i = 0; i < queries.length; i++) {
-        arr[queries[i][0] - 1] = arr[queries[i][0] - 1] + queries[i][2]
-        arr[queries[i][1] - 1] = arr[queries[i][1] - 1] + queries[i][2]
-        console.log(arr)
-    }
-    let result = Math.max(...arr)
-    return result;
+    const arr = Array(n + 1);
+    let maxValue = 0,
+        currentNumber = 0;
+    queries.forEach(([startRange, endRange, value]) => {
+        arr[startRange] = arr[startRange] || { start: 0, end: 0 };
+        arr[endRange] = arr[endRange] || { start: 0, end: 0 };
+        arr[startRange].start += value;
+        arr[endRange].end += value;
+    });
+    arr.forEach((cell) => {
+        if (cell) {
+            currentNumber += cell.start;
+            if (currentNumber > maxValue) {
+                maxValue = currentNumber;
+            }
+            currentNumber -= cell.end;
+        }
+    });
+    return maxValue;
 }
 
 function main() {
